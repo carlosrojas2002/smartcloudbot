@@ -1,74 +1,68 @@
-# 🤖 SmartCloud Bot
+# 🤖 SmartCloudBot - Asistente de Soporte Cloud con IA
 
-## 🎯 Descripción
-Bot inteligente para automatización y gestión de recursos en la nube mediante AWS Lambda.
+![AWS](https://img.shields.io/badge/AWS-Serverless-orange)
+![Python](https://img.shields.io/badge/Python-3.9-blue)
+![Status](https://img.shields.io/badge/Status-Completed-green)
 
-## ✨ Características Principales
-- **Automatización de tareas** en entornos cloud
-- **Gestión inteligente** de recursos AWS
-- **Ejecución serverless** mediante Lambda
-- **Escalabilidad automática** según demanda
-- **Monitoreo integrado** con CloudWatch
+**SmartCloudBot** es un asistente virtual inteligente desplegado en la nube de AWS. Su objetivo principal es automatizar la atención al cliente respondiendo preguntas frecuentes (FAQ) sobre servicios, precios y horarios, con capacidad de operar en múltiples idiomas.
 
-## 🏗️ Arquitectura
+## 📋 Características Principales
 
-### 🔧 Tecnologías Utilizadas
-- **AWS Lambda** - Ejecución serverless
-- **Python** - Lenguaje de programación
-- **AWS API Gateway** - Endpoint de entrada
-- **Amazon CloudWatch** - Monitoreo y logs
-- **AWS IAM** - Gestión de permisos
+* **🧠 Inteligencia Conversacional:** Utiliza **Amazon Lex V2** para entender la intención del usuario y procesar lenguaje natural.
+* **🌍 Soporte Multi-idioma:** Capacidad de atender usuarios en **Español e Inglés**, realizando traducciones automáticas en tiempo real (Backend logic).
+* **☁️ Arquitectura 100% Serverless:** No requiere administración de servidores. Utiliza AWS Lambda y API Gateway.
+* **💾 Base de Conocimiento Dinámica:** Las respuestas no están "quemadas" en el código, sino que se consultan dinámicamente desde una base de datos **DynamoDB**.
+* **📊 Persistencia y Logs:** Guarda un historial detallado de cada conversación para auditoría y análisis.
+* **🖥️ Interfaz Web Moderna:** Frontend ligero alojado en **Amazon S3**.
 
-## 🚀 Configuración Rápida
+## 🏗️ Arquitectura del Sistema
 
-### Prerrequisitos
-- Cuenta AWS con permisos para Lambda
-- AWS CLI configurado
-- Python 3.8+
+El sistema sigue un patrón de arquitectura orientada a eventos.
 
-### Instalación
+![Diagrama de Arquitectura](architecture/ProyectoServidores.drawio.png)
 
-# Clonar repositorio
-git clone https://github.com/carlosrojas2002/smartcloudbot.git
-cd smartcloudbot
+*(Puedes ver el detalle técnico en la carpeta `/architecture`)*
 
-## 💻 Uso Básico
+## 🛠️ Tecnologías Utilizadas
 
-# Ejemplo de invocación
-import boto3
-import json
+| Componente | Servicio AWS | Función |
+| :--- | :--- | :--- |
+| **Frontend** | Amazon S3 | Alojamiento de sitio web estático (HTML/JS). |
+| **API / Entrypoint** | Amazon API Gateway | API HTTP pública y segura con CORS habilitado. |
+| **Orquestador** | AWS Lambda (Python) | Manejo de tráfico web, detección de idioma y traducción. |
+| **NLU / Bot** | Amazon Lex V2 | Comprensión del lenguaje natural y gestión de sesiones. |
+| **Lógica de Negocio** | AWS Lambda (Python) | Cumplimiento (Fulfillment), análisis de sentimiento y conexión a BD. |
+| **Base de Datos** | Amazon DynamoDB | Tablas para FAQ (KnowledgeBase) y Logs de sesión. |
 
-lambda_client = boto3.client('lambda')
-response = lambda_client.invoke(
-    FunctionName='smartcloud-bot',
-    Payload=json.dumps({'action': 'status'})
-)
+## 🚀 Instalación y Despliegue
 
-## 📁 Estructura del Proyecto
+Este proyecto se despliega utilizando la consola de AWS. Pasos generales:
 
+1.  **Base de Datos:** Crear tablas en DynamoDB (`FAQKnowledgeBase` y `ChatSessionLogs`).
+2.  **Lógica:** Desplegar funciones Lambda (`Orchestrator` y `Fulfillment`) con el código fuente en `/src/backend`.
+3.  **Bot:** Importar y construir el bot en Amazon Lex V2 conectado a la Lambda de Fulfillment.
+4.  **API:** Configurar API Gateway con integración a la Lambda Orquestadora.
+5.  **Frontend:** Subir el archivo `index.html` a un bucket de S3 con permisos de lectura pública.
+
+## 📂 Estructura del Proyecto
+
+```text
 smartcloudbot/
-├── docs/                    # Documentación completa
-├── architecture/           # Diagramas y diseños
-├── scripts/               # Scripts de utilidad
-└── README.md             # Este archivo
+├── architecture/       # Diagramas de arquitectura y documentación técnica
+├── src/
+│   ├── backend/        # Código fuente Python de las Lambdas
+│   └── frontend/       # Código HTML/JS de la interfaz web
+├── docs/               # Documentación adicional
+└── README.md           # Este archivo
 
-## 🔄 Flujo de Trabajo
-1. **Event trigger** desde servicios AWS
-2. **Lambda execution** con lógica del bot
-3. **Procesamiento** de la solicitud
-4. **Respuesta** vía API Gateway/Webhook
+🧪 Pruebas Realizadas
+El sistema ha sido probado exitosamente con los siguientes flujos:
 
-## 🤝 Contribuir
-¿Quieres mejorar SmartCloud Bot?
-1. Fork el proyecto
-2. Crea una rama feature (`git checkout -b feature/AmazingFeature`)
-3. Commit cambios (`git commit -m 'Add AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+Consulta de precios en Español (Consulta directa a DB).
 
-## 📞 Soporte
-- **Documentación**: Revisa `/docs` para guías detalladas
-- **Issues**: Reporta bugs en los issues del repositorio
+Consulta de precios en Inglés (Traducción → Consulta → Traducción).
 
-## 📄 Licencia
-Distribuido bajo MIT License.
+Manejo de errores y Fallback intents.
+
+📄 Licencia
+Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE.txt para más detalles.
