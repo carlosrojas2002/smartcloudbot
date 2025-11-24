@@ -76,5 +76,13 @@ Manejo de errores y Fallback intents.
 ### Chat en Portugés (Traducción automática)
 ![Portugués](images/res-por.png)
 
+## 💡 Retos y Soluciones Técnicas
+
+Durante el desarrollo, me enfrenté a restricciones en la cuenta educativa de AWS que bloqueaban servicios de IA como **Amazon Translate** y **Comprehend**.
+
+* **Desafío:** La Lambda `Orchestrator` fallaba al intentar traducir con la API oficial debido a la política `SubscriptionRequiredException`.
+* **Solución:** Implementé un **Motor de Traducción Simulado** utilizando diccionarios en Python (`hash maps`). Esto permite que el sistema traduzca frases clave en tiempo real con latencia cero, manteniendo la arquitectura original sin costos adicionales.
+* **Resultado:** El bot es funcional en inglés y español, cumpliendo los requisitos del sistema sin depender de servicios bloqueados.
+
 ## 📄 Licencia
 Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE.txt para más detalles.
