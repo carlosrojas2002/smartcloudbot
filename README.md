@@ -19,7 +19,7 @@
 
 El sistema sigue un patrón de arquitectura orientada a eventos.
 
-![Diagrama de Arquitectura](architecture/ProyectoServidores.drawio.png)
+![Diagrama de Arquitectura](docs/ProyectoServidores.drawio.png)
 
 *(Puedes ver el detalle técnico en la carpeta `/docs`)*
 
