@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 SmartCloudBot - Chatbot Multilingüe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2d3748;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f7fafc;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            background: #4299e1;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .bot-message {
+            background: white;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .language-indicator {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+        
+        .chat-input-container {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+        }
+        
+        .chat-input:focus {
+            border-color: #4299e1;
+        }
+        
+        .send-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .send-button:hover {
+            background: #3182ce;
+        }
+        
+        .suggestions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .suggestion-chip {
+            background: #edf2f7;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .suggestion-chip:hover {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            max-width: 70%;
+            border-bottom-left-radius: 5px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .typing-dots {
+            display: inline-block;
+        }
+        
+        .typing-dots span {
+            animation: typing 1.4s infinite;
+            opacity: 0.6;
+        }
+        
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.6; }
+            30% { opacity: 1; }
+        }
+        
+        .welcome-message {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 SmartCloudBot</h1>
+            <p>Chatbot Multilingüe - Español, English, Português</p>
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    ¡Hola! Soy SmartCloudBot. Puedo ayudarte en Español, English o Português. 🤗
+                </div>
+                <div class="message bot-message">
+                    ¿En qué puedo asistirte hoy? Puedes preguntar sobre precios, horarios, ubicación o contacto.
+                    <div class="language-indicator">Idioma: Español</div>
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <span>●</span><span>●</span><span>●</span>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="userInput" 
+                        placeholder="Escribe tu pregunta en español, inglés o portugués..."
+                        onkeypress="handleKeyPress(event)"
+                    >
+                    <button class="send-button" onclick="sendMessage()">Enviar</button>
+                </div>
+                
+                <div class="suggestions">
+                    <div class="suggestion-chip" onclick="sendSuggestion('precio')">💰 Precio</div>
+                    <div class="suggestion-chip" onclick="sendSuggestion('horario')">🕐 Horario</div>
+                    <div class="suggestion-chip" onclick="sendSuggestion('ubicacion')">📍 Ubicación</div>
+                    <div class="suggestion-chip" onclick="sendSuggestion('contacto')">📞 Contacto</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://k6mhqkdhrf.execute-api.us-east-1.amazonaws.com/chat';
+        let sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (!message) return;
+            
+            // Agregar mensaje del usuario al chat
+            addMessage(message, 'user');
+            userInput.value = '';
+            
+            // Mostrar indicador de typing
+            showTypingIndicator();
+            
+            // Enviar mensaje al backend
+            fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message,
+                    sessionId: sessionId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideTypingIndicator();
+                addMessage(data.response, 'bot', data.detectedLanguage);
+            })
+            .catch(error => {
+                hideTypingIndicator();
+                addMessage('Lo siento, hubo un error al procesar tu mensaje.', 'bot', 'es');
+                console.error('Error:', error);
+            });
+        }
+        
+        function sendSuggestion(topic) {
+            const suggestions = {
+                'precio': ['¿Cuáles son sus precios?', 'What are your prices?', 'Quais são os preços?'],
+                'horario': ['¿Cuál es su horario?', 'What are your hours?', 'Qual é o horário?'],
+                'ubicacion': ['¿Dónde están ubicados?', 'Where are you located?', 'Onde estão localizados?'],
+                'contacto': ['¿Cómo los contacto?', 'How can I contact you?', 'Como posso contactar?']
+            };
+            
+            const randomMessage = suggestions[topic][Math.floor(Math.random() * suggestions[topic].length)];
+            document.getElementById('userInput').value = randomMessage;
+            sendMessage();
+        }
+        
+        function addMessage(text, sender, language = 'es') {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const languageNames = {
+                'es': 'Español',
+                'en': 'English', 
+                'pt': 'Português'
+            };
+            
+            messageDiv.innerHTML = `
+                ${text}
+                <div class="language-indicator">Idioma: ${languageNames[language]}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'block';
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+        
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+        
+        // Enfocar el input al cargar la página
+        document.getElementById('userInput').focus();
+    </script>
+</body>
+</html>

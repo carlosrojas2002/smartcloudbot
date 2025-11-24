@@ -64,5 +64,16 @@ Consulta de precios en Inglés (Traducción → Consulta → Traducción).
 
 Manejo de errores y Fallback intents.
 
+## 📸 Demostración
+
+### Chat en Español (Consulta directa)
+![Español](images/Respodiendo een espanol.png)
+
+### Chat en Inglés (Traducción automática)
+![Inglés](images/respondiendo en ingles.png)
+
+### Chat en Portugés (Traducción automática)
+![Portugués](images/Respodiendo een portugues.png)
+
 📄 Licencia
 Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE.txt para más detalles.
