@@ -54,6 +54,7 @@ smartcloudbot/
 │   └── frontend/       # Código HTML/JS de la interfaz web
 ├── docs/               # Documentación adicional
 └── README.md           # Este archivo
+```
 
 ## 🧪 Pruebas Realizadas
 El sistema ha sido probado exitosamente con los siguientes flujos:
