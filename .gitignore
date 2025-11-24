@@ -1,0 +1,10 @@
+AWS
+.aws/
+
+Python
+pycache/
+*.pyc
+
+Sistema
+.DS_Store
+Thumbs.db
