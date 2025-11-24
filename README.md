@@ -21,7 +21,7 @@ El sistema sigue un patrón de arquitectura orientada a eventos.
 
 ![Diagrama de Arquitectura](architecture/ProyectoServidores.drawio.png)
 
-*(Puedes ver el detalle técnico en la carpeta `/architecture`)*
+*(Puedes ver el detalle técnico en la carpeta `/docs`)*
 
 ## 🛠️ Tecnologías Utilizadas
 
