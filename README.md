@@ -53,9 +53,9 @@ smartcloudbot/
 │   ├── backend/        # Código fuente Python de las Lambdas
 │   └── frontend/       # Código HTML/JS de la interfaz web
 ├── docs/               # Documentación adicional
-└── README.md           # Este archivo
+└── README.md           # Este archivo```
 
-🧪 Pruebas Realizadas
+## 🧪 Pruebas Realizadas
 El sistema ha sido probado exitosamente con los siguientes flujos:
 
 Consulta de precios en Español (Consulta directa a DB).
@@ -75,5 +75,5 @@ Manejo de errores y Fallback intents.
 ### Chat en Portugés (Traducción automática)
 ![Portugués](images/Respodiendo een portugues.png)
 
-📄 Licencia
+## 📄 Licencia
 Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE.txt para más detalles.
