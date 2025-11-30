@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🤖 SmartCloudBot - Chatbot Multilingüe</title>
+    <title>☕ TostiCafé - Soporte Virtual</title>
     <style>
+        /* --- ESTILOS GENERALES (Branding Café) --- */
         * {
             margin: 0;
             padding: 0;
@@ -13,82 +14,114 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3E2723 0%, #5D4037 100%); /* Fondo Café Oscuro */
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
         
         .container {
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: #FFF8E1; /* Fondo Crema */
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 85vh;
         }
         
+        /* --- CABECERA --- */
         .header {
-            background: #2d3748;
-            color: white;
-            padding: 30px;
+            background: #4E342E;
+            color: #FFECB3;
+            padding: 20px;
             text-align: center;
+            border-bottom: 4px solid #D2691E;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            margin: 0;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .header p {
-            opacity: 0.8;
-            font-size: 1.1em;
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 5px;
+            font-style: italic;
         }
         
+        /* --- AREA DE CHAT --- */
         .chat-container {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            height: 500px;
+            background-color: #ffffff;
+            background-image: radial-gradient(#D7CCC8 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow: hidden;
         }
         
         .chat-messages {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-            background: #f7fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
+        /* --- MENSAJES --- */
         .message {
-            margin-bottom: 15px;
-            padding: 12px 16px;
+            max-width: 80%;
+            padding: 12px 18px;
             border-radius: 18px;
-            max-width: 70%;
+            font-size: 15px;
+            line-height: 1.5;
+            position: relative;
             word-wrap: break-word;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .user-message {
-            background: #4299e1;
+            align-self: flex-end;
+            background: #D2691E; /* Naranja Tostado */
             color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 5px;
+            border-bottom-right-radius: 4px;
         }
         
         .bot-message {
+            align-self: flex-start;
             background: white;
-            color: #2d3748;
-            border: 1px solid #e2e8f0;
-            border-bottom-left-radius: 5px;
+            color: #3E2723;
+            border: 1px solid #EFEBE9;
+            border-bottom-left-radius: 4px;
+            border-left: 4px solid #8D6E63;
         }
         
         .language-indicator {
-            font-size: 0.8em;
+            font-size: 0.7em;
+            margin-top: 8px;
             opacity: 0.7;
-            margin-top: 5px;
+            text-align: right;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 4px;
         }
-        
-        .chat-input-container {
+
+        /* --- INPUT Y BOTONES --- */
+        .input-area {
             padding: 20px;
-            border-top: 1px solid #e2e8f0;
-            background: white;
+            background: #FFF3E0;
+            border-top: 1px solid #D7CCC8;
         }
         
         .input-group {
@@ -98,223 +131,217 @@
         
         .chat-input {
             flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 25px;
-            outline: none;
+            padding: 15px;
+            border: 2px solid #BCAAA4;
+            border-radius: 30px;
             font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+            background: white;
         }
         
         .chat-input:focus {
-            border-color: #4299e1;
+            border-color: #D2691E;
+            box-shadow: 0 0 5px rgba(210, 105, 30, 0.3);
         }
         
         .send-button {
-            background: #4299e1;
+            background: #4E342E;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 0 25px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
         }
         
         .send-button:hover {
-            background: #3182ce;
+            background: #D2691E;
+            transform: translateY(-2px);
         }
-        
+
+        /* --- BOTONES DE SUGERENCIA (CORREGIDOS) --- */
         .suggestions {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 15px;
             flex-wrap: wrap;
+            justify-content: center;
         }
         
         .suggestion-chip {
-            background: #edf2f7;
-            border: 1px solid #cbd5e0;
+            background: white;
+            color: #5D4037;
+            border: 1px solid #8D6E63;
             padding: 8px 16px;
             border-radius: 20px;
+            font-size: 13px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            font-weight: 600;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.05);
         }
         
         .suggestion-chip:hover {
-            background: #4299e1;
+            background: #D2691E;
             color: white;
+            border-color: #D2691E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        
+
+        /* --- INDICADOR ESCRIBIENDO --- */
         .typing-indicator {
             display: none;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 18px;
-            max-width: 70%;
-            border-bottom-left-radius: 5px;
-            border: 1px solid #e2e8f0;
+            align-self: flex-start;
+            background: #E0E0E0;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            margin-left: 20px;
         }
-        
-        .typing-dots {
+        .dot {
+            height: 7px;
+            width: 7px;
+            background-color: #666;
+            border-radius: 50%;
             display: inline-block;
+            animation: bounce 1.3s linear infinite;
         }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
         
-        .typing-dots span {
-            animation: typing 1.4s infinite;
-            opacity: 0.6;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
-        
-        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-        
-        @keyframes typing {
-            0%, 60%, 100% { opacity: 0.6; }
-            30% { opacity: 1; }
-        }
-        
-        .welcome-message {
-            text-align: center;
-            color: #4a5568;
-            margin-bottom: 20px;
-        }
+
     </style>
 </head>
 <body>
+
     <div class="container">
         <div class="header">
-            <h1>🤖 SmartCloudBot</h1>
-            <p>Chatbot Multilingüe - Español, English, Português</p>
+            <h1>☕ TostiCafé</h1>
+            <p>Experiencia de Café Colombiano Premium</p>
         </div>
         
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
-                <div class="welcome-message">
-                    ¡Hola! Soy SmartCloudBot. Puedo ayudarte en Español, English o Português. 🤗
-                </div>
                 <div class="message bot-message">
-                    ¿En qué puedo asistirte hoy? Puedes preguntar sobre precios, horarios, ubicación o contacto.
-                    <div class="language-indicator">Idioma: Español</div>
+                    👋 ¡Hola! Bienvenido a <b>TostiCafé</b>.<br>
+                    Soy tu barista virtual. ¿Te gustaría ver nuestro menú o saber dónde estamos ubicados?
+                    <div class="language-indicator">Español</div>
                 </div>
             </div>
             
             <div class="typing-indicator" id="typingIndicator">
-                <div class="typing-dots">
-                    <span>●</span><span>●</span><span>●</span>
-                </div>
+                <span class="dot"></span> <span class="dot"></span> <span class="dot"></span>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-group">
+                <input type="text" id="userInput" class="chat-input" placeholder="Escribe aquí..." onkeypress="handleKeyPress(event)">
+                <button class="send-button" onclick="sendMessage()">Enviar</button>
             </div>
             
-            <div class="chat-input-container">
-                <div class="input-group">
-                    <input 
-                        type="text" 
-                        class="chat-input" 
-                        id="userInput" 
-                        placeholder="Escribe tu pregunta en español, inglés o portugués..."
-                        onkeypress="handleKeyPress(event)"
-                    >
-                    <button class="send-button" onclick="sendMessage()">Enviar</button>
-                </div>
-                
-                <div class="suggestions">
-                    <div class="suggestion-chip" onclick="sendSuggestion('precio')">💰 Precio</div>
-                    <div class="suggestion-chip" onclick="sendSuggestion('horario')">🕐 Horario</div>
-                    <div class="suggestion-chip" onclick="sendSuggestion('ubicacion')">📍 Ubicación</div>
-                    <div class="suggestion-chip" onclick="sendSuggestion('contacto')">📞 Contacto</div>
-                </div>
+            <div class="suggestions">
+                <div class="suggestion-chip" onclick="sendMessage('Quiero ver los productos')">☕ Ver Menú</div>
+                <div class="suggestion-chip" onclick="sendMessage('¿Dónde es la ubicacion?')">📍 Ubicación</div>
+                <div class="suggestion-chip" onclick="sendMessage('¿Qué horario tienen?')">🕒 Horarios</div>
+                <div class="suggestion-chip" onclick="sendMessage('Quiero el contacto')">📞 Contacto</div>
             </div>
         </div>
     </div>
 
     <script>
+        // URL DE TU API GATEWAY
         const API_URL = 'https://k6mhqkdhrf.execute-api.us-east-1.amazonaws.com/chat';
+        
+        // Generar ID de sesión único
         let sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
-        
+
+        // Enviar con tecla Enter
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
+            if (event.key === 'Enter') sendMessage();
         }
-        
-        function sendMessage() {
-            const userInput = document.getElementById('userInput');
-            const message = userInput.value.trim();
+
+        // Función Principal de Envío
+        function sendMessage(textOverride) {
+            const inputField = document.getElementById('userInput');
+            
+            // Si el usuario hizo clic en un botón, usamos ese texto. Si no, lo que escribió.
+            const message = textOverride || inputField.value.trim();
             
             if (!message) return;
-            
-            // Agregar mensaje del usuario al chat
+
+            // 1. Mostrar mensaje del usuario en el chat
             addMessage(message, 'user');
-            userInput.value = '';
+            inputField.value = ''; // Limpiar input
             
-            // Mostrar indicador de typing
-            showTypingIndicator();
-            
-            // Enviar mensaje al backend
+            // 2. Mostrar animación de "Escribiendo..."
+            const typingInd = document.getElementById('typingIndicator');
+            typingInd.style.display = 'block';
+            scrollToBottom();
+
+            // 3. Enviar a AWS (Backend)
             fetch(API_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     message: message,
-                    sessionId: sessionId
+                    sessionId: sessionId,
+                    language: 'es' // Enviamos base español, el Orquestador decide el idioma final
                 })
             })
             .then(response => response.json())
             .then(data => {
-                hideTypingIndicator();
-                addMessage(data.response, 'bot', data.detectedLanguage);
+                typingInd.style.display = 'none';
+                // Detectar idioma de respuesta para mostrar la etiqueta correcta
+                const lang = data.detectedLanguage || 'es';
+                addMessage(data.response, 'bot', lang);
             })
             .catch(error => {
-                hideTypingIndicator();
-                addMessage('Lo siento, hubo un error al procesar tu mensaje.', 'bot', 'es');
+                typingInd.style.display = 'none';
                 console.error('Error:', error);
+                addMessage("☕ Lo siento, tuve un problema de conexión. Intenta de nuevo.", 'bot');
             });
         }
-        
-        function sendSuggestion(topic) {
-            const suggestions = {
-                'precio': ['¿Cuáles son sus precios?', 'What are your prices?', 'Quais são os preços?'],
-                'horario': ['¿Cuál es su horario?', 'What are your hours?', 'Qual é o horário?'],
-                'ubicacion': ['¿Dónde están ubicados?', 'Where are you located?', 'Onde estão localizados?'],
-                'contacto': ['¿Cómo los contacto?', 'How can I contact you?', 'Como posso contactar?']
-            };
+
+        // Función para dibujar los mensajes en pantalla
+        function addMessage(text, sender, lang = 'es') {
+            const chatBox = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = `message ${sender}-message`;
             
-            const randomMessage = suggestions[topic][Math.floor(Math.random() * suggestions[topic].length)];
-            document.getElementById('userInput').value = randomMessage;
-            sendMessage();
-        }
-        
-        function addMessage(text, sender, language = 'es') {
-            const chatMessages = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}-message`;
-            
-            const languageNames = {
-                'es': 'Español',
-                'en': 'English', 
-                'pt': 'Português'
-            };
-            
-            messageDiv.innerHTML = `
+            const langLabel = { 'es': 'Español', 'en': 'English', 'pt': 'Português' };
+            const label = langLabel[lang] || 'Español';
+
+            // Usamos innerHTML para permitir negritas <b> y saltos <br>
+            div.innerHTML = `
                 ${text}
-                <div class="language-indicator">Idioma: ${languageNames[language]}</div>
+                ${sender === 'bot' ? `<div class="language-indicator">${label}</div>` : ''}
             `;
             
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatBox.appendChild(div);
+            scrollToBottom();
+        }
+
+        // Mantener el scroll siempre abajo
+        function scrollToBottom() {
+            const chatContainer = document.querySelector('.chat-messages');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
         
-        function showTypingIndicator() {
-            document.getElementById('typingIndicator').style.display = 'block';
-            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-        }
-        
-        function hideTypingIndicator() {
-            document.getElementById('typingIndicator').style.display = 'none';
-        }
-        
-        // Enfocar el input al cargar la página
-        document.getElementById('userInput').focus();
+        // Enfocar input al cargar
+        window.onload = function() {
+            document.getElementById('userInput').focus();
+        };
     </script>
 </body>
 </html>
