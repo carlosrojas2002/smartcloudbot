@@ -53,21 +53,49 @@ Este documento proporciona una guía paso a paso para crear un chatbot multiling
 
 ### C. Creación de Intenciones (Intents)
 
-*Para el idioma `Spanish (ES)` (y luego añadir utterances equivalentes para los otros idiomas):*
+Esta sección detalla el proceso para crear cada intención. Repetirás estos pasos para cada una de las intenciones que necesita el bot (`Saludo`, `PedirMenu`, etc.).
 
-1.  **`Saludo`**:
-    *   **Utterances:** "Hola", "Buenos días", "Qué tal".
-2.  **`PedirMenu`**:
-    *   **Utterances:** "Quiero ver el menú", "Qué tienes para comer", "Me muestras la carta".
-3.  **`PreguntarHorarios`**:
-    *   **Utterances:** "A qué hora abren", "Cuál es su horario", "Están abiertos ahora?".
-4.  **`HacerPedido`**:
-    *   **Utterances:** "Quiero hacer un pedido", "Quisiera pedir {pedidoDetalle}".
-    *   **Slot:** Crear un slot llamado `pedidoDetalle`, de tipo `AMAZON.FreeFormInput`, con el prompt: "Claro, ¿qué te gustaría pedir?".
-5.  **`PreguntaAbierta`**:
-    *   **Utterances:** "De dónde traen el café", "Hay estacionamiento cerca", "Tienen opciones sin gluten".
-6.  **`Fallback`**:
-    *   Crear una intención con este nombre exacto. Lex la usará automáticamente cuando no entienda al usuario. No necesita utterances.
+**Guía Detallada: Cómo Crear una Intención (Ejemplo: `Saludo`)**
+
+1.  **Navega a la Página de Intenciones:**
+    *   En la consola de tu bot `CafeteriaBot`, asegúrate de estar en el idioma `Spanish (ES)`.
+    *   En el menú de la izquierda, haz clic en **"Intenciones" (Intents)**.
+
+2.  **Inicia la Creación de la Intención:**
+    *   Haz clic en el botón naranja **"Añadir intención" (Add intent)**.
+    *   En el menú desplegable, elige **"Añadir intención en blanco" (Add empty intent)**.
+
+3.  **Configura el Nombre:**
+    *   En la nueva página, en el campo **"Nombre de la intención" (Intent name)**, escribe `Saludo`.
+
+4.  **Añade las Frases de Ejemplo (Utterances):**
+    *   Desplázate a la sección **"Frases de ejemplo" (Sample utterances)**.
+    *   En el cuadro de texto, escribe `Hola` y haz clic en el botón **"Añadir"**.
+    *   Repite el proceso para las otras frases:
+        *   `Buenos días`
+        *   `Qué tal`
+        *   `Buenas`
+
+5.  **Guarda la Intención:**
+    *   Ve al final de la página y haz clic en **"Guardar intención" (Save intent)**.
+
+**Lista de Intenciones a Crear:**
+
+Ahora, repite el proceso anterior para crear las siguientes intenciones con sus respectivas frases de ejemplo:
+
+*   **`PedirMenu`**:
+    *   **Frases de ejemplo:** "Quiero ver el menú", "Qué tienes para comer", "Me muestras la carta".
+*   **`PreguntarHorarios`**:
+    *   **Frases de ejemplo:** "A qué hora abren", "Cuál es su horario", "Están abiertos ahora?".
+*   **`HacerPedido`**:
+    *   **Frases de ejemplo:** "Quiero hacer un pedido", "Quisiera pedir {pedidoDetalle}".
+    *   **Configuración Adicional (Slots):** En la sección "Slots", crea un slot llamado `pedidoDetalle` de tipo `AMAZON.FreeFormInput` y asígnale el prompt: "Claro, ¿qué te gustaría pedir?".
+*   **`PreguntaAbierta`**:
+    *   **Frases de ejemplo:** "De dónde traen el café", "Hay estacionamiento cerca", "Tienen opciones sin gluten".
+*   **`Fallback`**:
+    *   Crea una intención con este nombre. No necesita frases de ejemplo. Lex la usará automáticamente cuando no entienda una pregunta.
+
+**Importante:** Después de crear las intenciones en español, cambia al idioma `English (US)` y `Portuguese (BR)` desde el menú de la izquierda, entra a cada intención y añade las frases de ejemplo traducidas.
 
 ### D. Construir y Probar
 
