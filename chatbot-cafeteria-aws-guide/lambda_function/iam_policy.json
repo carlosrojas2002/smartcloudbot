@@ -1,0 +1,51 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowCloudWatchLogs",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Sid": "AllowComprehend",
+            "Effect": "Allow",
+            "Action": "comprehend:DetectDominantLanguage",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowTranslate",
+            "Effect": "Allow",
+            "Action": "translate:TranslateText",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowLexInteraction",
+            "Effect": "Allow",
+            "Action": "lex:RecognizeText",
+            "Resource": "arn:aws:lex:<REGION>:<ACCOUNT_ID>:bot-alias/<BOT_ID>/<BOT_ALIAS_ID>"
+        },
+        {
+            "Sid": "AllowBedrockInvocation",
+            "Effect": "Allow",
+            "Action": "bedrock:InvokeModel",
+            "Resource": "arn:aws:bedrock:<REGION>::foundation-model/<BEDROCK_MODEL_ID>"
+        },
+        {
+            "Sid": "AllowDynamoDBLogging",
+            "Effect": "Allow",
+            "Action": "dynamodb:PutItem",
+            "Resource": "arn:aws:dynamodb:<REGION>:<ACCOUNT_ID>:table/<TABLE_NAME>"
+        },
+        {
+            "Sid": "AllowS3Logging",
+            "Effect": "Allow",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::<BUCKET_NAME>/logs/*"
+        }
+    ]
+}
