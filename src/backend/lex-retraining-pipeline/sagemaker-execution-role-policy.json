@@ -1,0 +1,61 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowS3BucketList",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::mi-bucket-de-datos-aqui"
+            ]
+        },
+        {
+            "Sid": "AllowS3ObjectReadWrite",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::mi-bucket-de-datos-aqui/*"
+            ]
+        },
+        {
+            "Sid": "AllowSageMakerProcessingJob",
+            "Effect": "Allow",
+            "Action": [
+                "sagemaker:CreateProcessingJob",
+                "sagemaker:DescribeProcessingJob"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowLexV2Import",
+            "Effect": "Allow",
+            "Action": [
+                "lex:StartImport",
+                "lex:DescribeImport"
+            ],
+            "Resource": "arn:aws:lex:mi-region-aws-aqui:<ACCOUNT_ID>:bot-alias/mi-bot-id-aqui/*"
+        },
+        {
+            "Sid": "AllowCloudWatchLogs",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:mi-region-aws-aqui:<ACCOUNT_ID>:log-group:/aws/sagemaker/ProcessingJobs:*"
+        },
+        {
+            "Sid": "AllowIAMPassRole",
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::<ACCOUNT_ID>:role/AmazonSageMaker-ExecutionRole-*"
+        }
+    ]
+}
